@@ -1,8 +1,8 @@
 Équipe de travail
 ------------------
-Johan Sintondji
-Karen Simard-Noreau
-Malek Khattech
+- Johan Sintondji
+- Karen Simard-Noreau
+- Malek Khattech
 
 Ouvrir le programme
 -------------------
