@@ -1,6 +1,7 @@
 #pragma once
 #pragma comment(lib, "strmiids.lib")
 #pragma comment(lib, "ole32.lib")
+#include <windows.h>
 #include <iostream>
 #include <dshow.h>
 
@@ -49,26 +50,38 @@ void main(void)
 			LONGLONG param2 = 6;
 
 			switch (choix) {
-				case 'P':
-					if (actif) {
-						hr = pControl->Pause();
-						actif = 0;
-						break;
-					}
-					// Run the graph.
-					hr = pControl->Run();
-					actif = 1;
+			case 'P':
+				if (actif) {
+					hr = pControl->Pause();
+					actif = 0;
 					break;
-				case 'A':
-					hr = pSeeking->SetRate(2.0);
-					break;
-				case 'R':
-					hr = pSeeking->SetPositions(&param1, 0, &param2, 0);
-					break;
-				case 'Q':
-					hr = pControl->Stop();
-					break;
-				default: std::cout << "bad insert" << std::endl;
+				}
+				// Run the graph.
+				hr = pControl->Run();
+				actif = 1;
+				break;
+			case 'A':
+				hr = pSeeking->SetRate(2.0);
+				break;
+			case 'R':
+				//hr = pSeeking->SetPositions(&param1, 0, &param2, 0);
+				//HRESULT hr = pControl->Run();
+				if (SUCCEEDED(hr))
+				{
+
+					REFERENCE_TIME rtNow = 0,
+						//met la video a la position de depart
+						hr = pSeeking->SetPositions(
+							&rtNow, AM_SEEKING_AbsolutePositioning,
+							NULL, AM_SEEKING_NoPositioning
+						);
+				}
+
+				break;
+			case 'Q':
+				hr = pControl->Stop();
+				break;
+			default: std::cout << "bad insert" << std::endl;
 			}
 
 		} while (choix != 'Q');
