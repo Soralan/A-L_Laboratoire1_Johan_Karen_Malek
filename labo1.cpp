@@ -46,13 +46,8 @@ void main(void)
 	if (SUCCEEDED(hr))
 	{
 		do {
-
 			cout << "\n P.Play ou pause \n A. Avance rapide \n R. Retour \n Q. Quitter \n Entree: ";
 			cin >> choix;
-			
-
-			
-
 			switch (choix) {
 			case 'P':
 				if (actif) {
