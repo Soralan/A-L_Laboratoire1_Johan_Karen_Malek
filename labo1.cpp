@@ -4,6 +4,9 @@
 #include <windows.h>
 #include <iostream>
 #include <dshow.h>
+#include <string>
+
+using namespace std;
 
 void main(void)
 {
@@ -38,16 +41,17 @@ void main(void)
 
 	char choix;
 	bool actif = 0;
+	bool etat_vitesse = 0;
 
 	if (SUCCEEDED(hr))
 	{
 		do {
 
-			std::cout << "\n P.Play ou pause \n A. Avance rapide \n R. Retour \n Q. Quitter \n Entree: ";
-			std::cin >> choix;
+			cout << "\n P.Play ou pause \n A. Avance rapide \n R. Retour \n Q. Quitter \n Entree: ";
+			cin >> choix;
+			
 
-			LONGLONG param1 = 5;
-			LONGLONG param2 = 6;
+			
 
 			switch (choix) {
 			case 'P':
@@ -61,11 +65,16 @@ void main(void)
 				actif = 1;
 				break;
 			case 'A':
-				hr = pSeeking->SetRate(2.0);
+				if (etat_vitesse)
+				{
+					hr = pSeeking->SetRate(1.0);
+					etat_vitesse = 0;
+					break;
+				}
+				hr = pSeeking->SetRate(4.0);
+				etat_vitesse = 1;
 				break;
 			case 'R':
-				//hr = pSeeking->SetPositions(&param1, 0, &param2, 0);
-				//HRESULT hr = pControl->Run();
 				if (SUCCEEDED(hr))
 				{
 
@@ -81,7 +90,7 @@ void main(void)
 			case 'Q':
 				hr = pControl->Stop();
 				break;
-			default: std::cout << "bad insert" << std::endl;
+			default:cout << "bad insert" << std::endl;
 			}
 
 		} while (choix != 'Q');
